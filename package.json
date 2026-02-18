@@ -1,0 +1,38 @@
+{
+  "name": "habits-planner",
+  "version": "1.0.0",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "build": "electron-builder --win portable",
+    "pack": "electron-packager . \"Habits Planner\" --platform=win32 --arch=x64 --out=dist-packager --overwrite"
+  },
+  "build": {
+    "appId": "com.habitsplanner.app",
+    "productName": "Habits Planner",
+    "directories": {
+      "output": "dist"
+    },
+    "files": [
+      "main.js",
+      "index.html",
+      "script.js",
+      "analytics.js",
+      "style.css",
+      "planner_bg.png",
+      "assets/**/*"
+    ],
+    "win": {
+      "target": "portable"
+    }
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "A gamified weekly habits planner desktop app",
+  "devDependencies": {
+    "electron": "^40.4.1",
+    "electron-builder": "^26.8.1",
+    "electron-packager": "^17.1.2"
+  }
+}

@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daily Planner</title>
+    <link rel="stylesheet" href="style.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Montserrat:wght@300;400;500&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <div class="planner-container">
+        <header class="planner-header">
+            <div class="header-left">
+                <div class="todo-title">TO-DO</div>
+                <div class="gamification-inline">
+                    <div class="gamification-stats">
+                        <div class="level-badge" id="level-badge">LVL 1</div>
+                        <div class="streak-container">
+                            <span class="streak-icon">🔥</span>
+                            <span class="streak-count" id="streak-count">0</span>
+                        </div>
+                    </div>
+                    <div class="xp-bar-container inline-xp">
+                        <div class="xp-fill" id="xp-fill"></div>
+                        <span class="xp-label" id="xp-label">0 XP</span>
+                    </div>
+                </div>
+            </div>
+            <div class="header-right">
+                <div class="week-nav">
+                    <button id="prev-week-btn" class="nav-btn" title="Previous Week">◀</button>
+                    <input type="text" id="week-input" class="date-input">
+                    <button id="next-week-btn" class="nav-btn" title="Next Week">▶</button>
+                </div>
+                <button id="export-week-btn" class="export-btn" title="Export / Print Week">🖨️</button>
+            </div>
+        </header>
+
+        <div class="planner-body">
+            <!-- Left Column: Tasks -->
+            <div class="tasks-column">
+                <!-- Headers for Days -->
+                <div class="days-row">
+                    <div class="spacer"></div> <!-- Aligns with task text -->
+                    <div class="days-labels">
+                        <span>S</span><span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span>S</span>
+                    </div>
+                </div>
+
+                <div id="task-list" class="task-list">
+                    <!-- Tasks injected here -->
+                </div>
+
+                <div class="task-actions">
+                    <button id="add-task-btn" class="add-btn">+ Add Task</button>
+                    <div class="template-wrapper">
+                        <button id="template-btn" class="add-btn template-btn">📋 Templates</button>
+                        <div id="template-dropdown" class="template-dropdown">
+                            <!-- Populated by JS -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sleep Tracker (Moved here) -->
+                <div class="tracker-widget sleep-tracker main-col-widget">
+                    <h3>SLEEP</h3>
+                    <div class="sleep-grid" id="sleep-grid">
+                        <!-- Injected by JS -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Column: Trackers Sidebar -->
+            <div class="trackers-sidebar">
+                <!-- Weather Tracker -->
+                <div class="tracker-widget weather-tracker">
+                    <h3>WEATHER</h3>
+                    <div class="weather-options" id="weather-options">
+                        <span data-weather="sun" title="Sunny">☀️</span>
+                        <span data-weather="cloud" title="Cloudy">☁️</span>
+                        <span data-weather="rain" title="Rainy">🌧️</span>
+                        <span data-weather="snow" title="Snowy">❄️</span>
+                        <span data-weather="storm" title="Stormy">⛈️</span>
+                    </div>
+                </div>
+
+                <!-- Appointments -->
+                <div class="tracker-widget appointments-tracker">
+                    <h3>APPOINTMENTS</h3>
+                    <div id="appointment-list" class="appointment-list">
+                        <!-- Dynamic Appointments -->
+                    </div>
+                    <button id="add-appt-btn" class="add-btn add-appt-btn">+ Add Appointment</button>
+                </div>
+
+                <!-- Water Tracker -->
+                <div class="tracker-widget water-tracker">
+                    <h3>WATER</h3>
+                    <div class="water-grid" id="water-grid">
+                        <!-- Droplets injected by JS -->
+                    </div>
+                </div>
+
+                <!-- Food Tracker -->
+                <div class="tracker-widget food-tracker">
+                    <h3>MEALS</h3>
+                    <div class="meal-list">
+                        <div class="meal-row" id="meal-breakfast-row">
+                            <div class="day-checkbox" id="meal-breakfast"></div>
+                            <span>Breakfast</span>
+                        </div>
+                        <div class="meal-row" id="meal-lunch-row">
+                            <div class="day-checkbox" id="meal-lunch"></div>
+                            <span>Lunch</span>
+                        </div>
+                        <div class="meal-row" id="meal-dinner-row">
+                            <div class="day-checkbox" id="meal-dinner"></div>
+                            <span>Dinner</span>
+                        </div>
+                        <div class="meal-row" id="meal-snack-row">
+                            <div class="day-checkbox" id="meal-snack"></div>
+                            <span>Snacks</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Mood Tracker -->
+                <div class="tracker-widget mood-tracker">
+                    <h3>MOOD</h3>
+                    <div class="mood-options" id="mood-options">
+                        <span data-mood="rad" title="Rad">🤩</span>
+                        <span data-mood="good" title="Good">🙂</span>
+                        <span data-mood="meh" title="Meh">😐</span>
+                        <span data-mood="bad" title="Bad">🙁</span>
+                        <span data-mood="awful" title="Awful">😫</span>
+                    </div>
+                </div>
+
+                <!-- Pomodoro Timer -->
+                <div class="tracker-widget pomodoro-tracker">
+                    <h3>FOCUS TIMER</h3>
+                    <div class="pomodoro-widget">
+                        <span class="pomodoro-label" id="pomodoro-label">WORK</span>
+                        <span class="pomodoro-display" id="pomodoro-display">25:00</span>
+                        <div class="pomodoro-controls">
+                            <button id="pomodoro-start" class="pomo-btn">▶</button>
+                            <button id="pomodoro-reset" class="pomo-btn">⟳</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bottom Section: Unique Event & Sleep & Fitness -->
+        <div class="bottom-section">
+            <div class="tracker-widget unique-event-tracker">
+                <h3>WEEKLY HIGHLIGHT</h3>
+                <textarea id="unique-event-input" placeholder="This week's highlight..."></textarea>
+            </div>
+
+            <div class="tracker-widget fitness-tracker">
+                <h3>FITNESS</h3>
+                <div class="fitness-inputs">
+                    <input type="text" id="fitness-type" placeholder="Type (e.g. Yoga)">
+                    <input type="text" id="fitness-duration" placeholder="Duration">
+                </div>
+            </div>
+
+            <!-- Sleep Tracker moved to main column -->
+        </div>
+
+
+        <!-- Analytics -->
+        <button id="analytics-toggle-btn" class="analytics-toggle-btn">📊 Show Analytics</button>
+        <div id="analytics-panel" class="analytics-panel">
+            <div class="chart-grid">
+                <div class="chart-card">
+                    <h4>Sleep (Avg Hours)</h4>
+                    <canvas id="chart-sleep"></canvas>
+                </div>
+                <div class="chart-card">
+                    <h4>Mood Trend</h4>
+                    <canvas id="chart-mood"></canvas>
+                </div>
+                <div class="chart-card">
+                    <h4>Task Completion</h4>
+                    <canvas id="chart-tasks"></canvas>
+                </div>
+                <div class="chart-card">
+                    <h4>Water Intake</h4>
+                    <canvas id="chart-water"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+    <script src="script.js"></script>
+    <script src="analytics.js"></script>
+</body>
+
+</html>
